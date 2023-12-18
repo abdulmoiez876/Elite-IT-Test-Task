@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 
 import { productsRouter } from './routers/products.router.js';
+import { listingsRouter } from './routers/listings.router.js';
 
 dotenv.config();
 const app = express();
@@ -11,6 +12,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/products', productsRouter);
+app.use('/listings', listingsRouter);
 
 await mongoose.connect(process.env.MONGO_URL).then(() => {
     console.log('Connected to MongoDB');
