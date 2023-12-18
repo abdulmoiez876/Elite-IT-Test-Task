@@ -9,3 +9,13 @@ export const createProduct = async (req, res) => {
         res.status(500).send({ error: err.message });
     }
 }
+
+export const getAllProducts = async (req, res) => {
+    try {
+        const products = await productsModel.find();
+        res.status(200).send(products);
+    }
+    catch (err) {
+        res.status(500).send({ error: err.message });
+    }
+}
