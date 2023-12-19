@@ -84,6 +84,9 @@ export default function Listing() {
                             </>
                         );
                     }
+                    else {
+                        return <></>
+                    }
                 })}
                 <button onClick={handleNextPage} disabled={currentPage === totalPages} className={`${currentPage === totalPages && 'tw-text-slate-400'}`}>Next</button>
             </div>

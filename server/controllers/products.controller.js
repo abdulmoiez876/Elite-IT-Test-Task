@@ -19,3 +19,20 @@ export const getAllProducts = async (req, res) => {
         res.status(500).send({ error: err.message });
     }
 }
+
+export const updateProductPrices = async () => {
+    try {
+        const products = await productsModel.find();
+        for (const product of products) {
+            const newPrice = generateRandomPrice();
+            product.price = newPrice;
+            await product.save();
+        }
+    } catch (error) {
+        console.error('Error updating product prices:', error);
+    }
+}
+
+function generateRandomPrice() {
+    return Math.floor(Math.random() * 100) + 1;
+}
