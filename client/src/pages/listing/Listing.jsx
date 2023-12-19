@@ -9,10 +9,7 @@ export default function Listing() {
     const dispatch = useDispatch();
 
     // globals
-    const { listings, currentPage, totalItems } = useSelector(state => state.listings);
-
-    // locals
-    const totalPages = Math.ceil(totalItems / 5);
+    const { listings, currentPage, totalPages } = useSelector(state => state.listings);
 
     // functions
     const handlePreviousPage = () => {
@@ -76,7 +73,7 @@ export default function Listing() {
                                 </div>
                                 <button
                                     key={index}
-                                    className={`tw-px-3 tw-py-2 tw-rounded-lg tw-border-[1px] tw-border-slate-400 ${(currentPage === index + 1) && 'tw-bg-[#942d3b] tw-text-white'}`}
+                                    className={`tw-px-3 tw-py-2 tw-rounded-lg tw-border-[1px] tw-border-slate-400 ${(currentPage === totalPages) && 'tw-bg-[#942d3b] tw-text-white'}`}
                                     onClick={() => handlePageClick(totalPages)}
                                 >
                                     {totalPages}

@@ -5,6 +5,7 @@ const initialState = {
     listings: [],
     currentPage: 0,
     totalItems: 0,
+    totalPages: 0,
     refreshListings: false,
 }
 
@@ -34,6 +35,7 @@ export const listingsSlice = createSlice({
             state.listings = action.payload.listings;
             state.currentPage = action.payload.pagination.currentPage;
             state.totalItems = action.payload.pagination.totalItems;
+            state.totalPages = action.payload.pagination.totalPages;
         })
         builder.addCase(getListings.rejected, (state, action) => {
             console.log(action.payload.error);
