@@ -28,7 +28,7 @@ export const listingsSlice = createSlice({
 
         // get listings
         builder.addCase(getListings.pending, (state, action) => { 
-            state.listings = [];
+            // state.listings = [];
         })
         builder.addCase(getListings.fulfilled, (state, action) => {
             state.listings = action.payload.listings;

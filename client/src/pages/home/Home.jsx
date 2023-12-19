@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+
+// redux
+import { createListing, setRefreshListings } from '../../store/listingsSlice';
 
 // components
 import Modal from '../../components/modal/Modal';
@@ -8,6 +11,9 @@ import Modal from '../../components/modal/Modal';
 import emptyStar from '../../assets/emptyStar.svg';
 
 export default function Home() {
+    // initializations
+    const dispatch = useDispatch();
+
     // globals
     const { products } = useSelector(state => state.products);
 
@@ -16,6 +22,7 @@ export default function Home() {
         name: '',
         email: '',
         rating: 1,
+        productName: ""
     })
     const [showModal, setShowModal] = useState(false);
 
@@ -23,7 +30,8 @@ export default function Home() {
     const handleModal = (event) => {
         setUserData({
             ...userData,
-            rating: event.target.name
+            rating: event.target.name,
+            productName: event.target.id
         })
         setShowModal(true);
     }
@@ -38,6 +46,20 @@ export default function Home() {
         setUserData({
             ...userData,
             [event.target.name]: event.target.value
+        })
+    }
+
+    const createListingHandler = () => {
+        dispatch(createListing(userData)).then(response => {
+            if (!response.error) {
+                dispatch(setRefreshListings())
+                setUserData({
+                    name: '',
+                    email: '',
+                    rating: 1,
+                    productName: ""
+                })
+            }
         })
     }
 
@@ -61,11 +83,11 @@ export default function Home() {
                             </svg>
 
                             <div className='tw-flex tw-items-center tw-gap-x-2'>
-                                <img onClick={handleModal} className='tw-cursor-pointer' name='1' src={emptyStar} alt="star" />
-                                <img onClick={handleModal} className='tw-cursor-pointer' name='2' src={emptyStar} alt="star" />
-                                <img onClick={handleModal} className='tw-cursor-pointer' name='3' src={emptyStar} alt="star" />
-                                <img onClick={handleModal} className='tw-cursor-pointer' name='4' src={emptyStar} alt="star" />
-                                <img onClick={handleModal} className='tw-cursor-pointer' name='5' src={emptyStar} alt="star" />
+                                <img onClick={handleModal} id={product.name} className='tw-cursor-pointer' name='1' src={emptyStar} alt="star" />
+                                <img onClick={handleModal} id={product.name} className='tw-cursor-pointer' name='2' src={emptyStar} alt="star" />
+                                <img onClick={handleModal} id={product.name} className='tw-cursor-pointer' name='3' src={emptyStar} alt="star" />
+                                <img onClick={handleModal} id={product.name} className='tw-cursor-pointer' name='4' src={emptyStar} alt="star" />
+                                <img onClick={handleModal} id={product.name} className='tw-cursor-pointer' name='5' src={emptyStar} alt="star" />
                             </div>
                         </div>
 
@@ -79,7 +101,7 @@ export default function Home() {
                     <div className='tw-flex tw-flex-col tw-gap-y-2 tw-items-center tw-w-full'>
                         <input className='tw-w-full tw-px-1 tw-py-2 tw-border-[1px] tw-border-slate-300 tw-rounded-md' type="text" name='name' value={userData.name} onChange={changeHandler} placeholder='Enter Name' />
                         <input className='tw-w-full tw-px-1 tw-py-2 tw-border-[1px] tw-border-slate-300 tw-rounded-md' type="text" name='email' value={userData.email} onChange={changeHandler} placeholder='Enter Email' />
-                        <button className='tw-bg-slate-300 tw-w-full tw-p-1 tw-rounded-md'>Submit</button>
+                        <button className='tw-bg-slate-300 tw-w-full tw-p-1 tw-rounded-md' onClick={createListingHandler}>Submit</button>
                     </div>
                 </Modal>
             }

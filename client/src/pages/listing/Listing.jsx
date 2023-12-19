@@ -50,9 +50,34 @@ export default function Listing() {
 
             <div className='tw-flex tw-justify-end tw-mt-4 tw-gap-x-2'>
                 <button onClick={handlePreviousPage} disabled={currentPage === 1} className={`${currentPage === 1 && 'tw-text-slate-400'}`}>Previous</button>
-                {[...Array(totalPages)].map((_, index) => (
-                    <button key={index} className={`tw-px-3 tw-py-2 tw-rounded-lg tw-border-[1px] tw-border-slate-400 ${(currentPage === index + 1) && 'tw-bg-[#942d3b] tw-text-white'}`} onClick={() => handlePageClick(index + 1)}>{index + 1}</button>
-                ))}
+                {[...Array(totalPages)].map((_, index) => {
+                    if (totalPages <= 3 || (totalPages > 3 && index < 3)) {
+                        return (
+                            <button
+                                key={index}
+                                className={`tw-px-3 tw-py-2 tw-rounded-lg tw-border-[1px] tw-border-slate-400 ${(currentPage === index + 1) && 'tw-bg-[#942d3b] tw-text-white'}`}
+                                onClick={() => handlePageClick(index + 1)}
+                            >
+                                {index + 1}
+                            </button>
+                        );
+                    } else if (index === 4) {
+                        return (
+                            <>
+                                <div>
+                                    ...
+                                </div>
+                                <button
+                                    key={index}
+                                    className={`tw-px-3 tw-py-2 tw-rounded-lg tw-border-[1px] tw-border-slate-400 ${(currentPage === index + 1) && 'tw-bg-[#942d3b] tw-text-white'}`}
+                                    onClick={() => handlePageClick(totalPages)}
+                                >
+                                    {totalPages}
+                                </button>
+                            </>
+                        );
+                    }
+                })}
                 <button onClick={handleNextPage} disabled={currentPage === totalPages} className={`${currentPage === totalPages && 'tw-text-slate-400'}`}>Next</button>
             </div>
         </div>
