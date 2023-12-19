@@ -50,9 +50,11 @@ export default function Home() {
     }
 
     const createListingHandler = () => {
+        if (userData.name === '' || userData.email === '') return alert('Please fill all the fields');
         dispatch(createListing(userData)).then(response => {
             if (!response.error) {
                 dispatch(setRefreshListings())
+                setShowModal(false);
                 setUserData({
                     name: '',
                     email: '',
