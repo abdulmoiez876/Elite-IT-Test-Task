@@ -1,13 +1,21 @@
 import React, { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+// components
+import Navbar from './components/navbar/Navbar';
+
+// redux
 import { getAllProducts } from './store/productsSlice';
+import { getListings } from './store/listingsSlice';
 
 function App() {
 	// initializations
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+
+	// globals
+	const { refreshListings, currentPage } = useSelector(state => state.listings);
 
 	// effects
 	// for redirecting user to home page
@@ -21,9 +29,17 @@ function App() {
 	useEffect(() => {
 		dispatch(getAllProducts());
 	}, [dispatch])
-	
+
+	// fetching listings
+	useEffect(() => {
+		dispatch(getListings(currentPage));
+	}, [dispatch, refreshListings])
+
 	return (
-		<Outlet />
+		<>
+			<Navbar />
+			<Outlet />
+		</>
 	);
 }
 
