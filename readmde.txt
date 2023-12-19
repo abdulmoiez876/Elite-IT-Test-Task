@@ -1,0 +1,18 @@
+1. For starting client follow these steps:
+=> cd client
+=> npm i
+=> npm start
+client will run on port 3000
+
+2. for starting server
+=> cd server
+=> npm i
+=> npm run dev
+server will start running on port 8000
+
+
+According to my understanding of the task, web app has following functionality:
+- There are two pages, in the home page there are three products that are being fetched from server when app starts for the first time
+- when user clicks on the star of any of the listed product a modal is opening where user enters his/her name and email and after pressing submit there response is saved in the database (e.g if user clicks on third star on the Inventory management system then name, email, product Name (which the user starred), and rating (the star on which the user clicked) are saved in the databse)
+- On the listing page, all the responses are shown, I've implemented pagination in both client and server so that all the responses are not fetched at once (if the responses are in thousands it can lead to large load times, therefore I implemented pagination).
+User can browse through all responses using the buttons at the right bottom
